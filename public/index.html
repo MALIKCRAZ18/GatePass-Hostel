@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gatepass-Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container1">
+        <h1 class="header-section">Hostel Leave Request Screen</h1>
+        <div class="container2">
+            <button class="request" id="req" onclick="myFunction1()">Leave Request</button>
+            <button class="status" id="stat" onclick="myFunction2()">Leave Status</button>
+            <button class="history" id="hist" onclick="myFunction3()">Leave History</button>
+        </div>
+        <div class="container3" style="display: none;">
+            <h1 class="hod">HOD NAME: 123456789</h1>
+            <form action="http://localhost:5000/submit-leave" method="POST">
+                <label for="Ltpye">Leave Type</label><br>
+                <select name="Ltpye" id="Ltpye">
+                    <option value="select">-Select-</option>
+                    <option value="sick">Sick</option>
+                    <option value="emergency">Emergency</option>
+                    <option value="medical">Medical advice</option>
+                    <option value="od">On Duty</option>
+                </select><br>
+
+                <label for="Visit">Visiting Place</label>
+                <input type="text" name="Visit" id="Visit" required><br>
+
+                <label for="fdate">From Date</label>
+                <input type="date" name="fdate" id="fdate" required><br>
+
+                <label for="tform">Time From</label>
+                <input type="time" name="tform" id="tform" required><br>
+
+                <label for="tdate">To Date</label>
+                <input type="date" name="tdate" id="tdate" required><br>
+
+                <label for="tto">Time To</label>
+                <input type="time" name="tto" id="tto" required><br>
+
+                <label for="reason">Reason</label>
+                <textarea name="reason" id="reason" required></textarea><br>
+
+                <button class="button" type="submit">Submit Leave Application</button>
+            </form>
+        </div>
+        <div class="container4">
+            <h1 class="hod">LEAVE DATA</h1>
+            <p>Leave results</p>
+<table id="leaveTable">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Leave Type</th>
+            <th>Visiting Place</th>
+            <th>From Date</th>
+            <th>From Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Data will be inserted here -->
+    </tbody>
+</table>
+        </div>
+    </div>
+    <script>
+        function myFunction1() {
+           alert("Clicked me")
+           const dstyle = document.querySelector(".container3");
+           dstyle.style.display = "block";
+        }
+        function myFunction2() {
+           alert("Clicked me2");
+           async function fetchLeaveData() {
+    try {
+        console.log("HERE")
+        const response = await fetch('http://localhost:5000/leave-data');
+        console.log("DONE")
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        const tableBody = document.querySelector('#leaveTable tbody');
+
+        // Clear existing rows
+        tableBody.innerHTML = '';
+
+        // Populate the table with received data
+        data.forEach(item => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${item.id}</td>
+                <td>${item.leave_type}</td>
+                <td>${item.visiting_place}</td>
+                <td>${new Date(item.from_date).toLocaleDateString()}</td>
+                <td>${item.from_time}</td>
+            `;
+            tableBody.appendChild(row);
+        });
+    } catch (error) {
+        console.error('Error fetching leave data:', error);
+    }
+}
+fetchLeaveData();
+        }
+        function myFunction3() {
+           
+        }
+      </script>
+</body>
+</html>
