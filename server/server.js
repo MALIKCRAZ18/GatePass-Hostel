@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const mysql2 = require('mysql2');
 const cors = require('cors');
 const app = express();
-// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors({
     origin: 'http://localhost:3000'
 }))
@@ -34,11 +34,12 @@ app.get('/leave-data', (req, res) => {
 
 
 app.post('/submit-leave', (req, res) => {
-    const { Ltpye, Visit, fdate, tform, tdate, tto, reason } = req.body;
+    console.log(req.body);
+    const { Ltype, Visit, fdate, tform, tdate, tto, reason } = req.body;
 
     const query = 'INSERT INTO leave_requests (leave_type, visiting_place, from_date, from_time, to_date, to_time, reason) VALUES (?, ?, ?, ?, ?, ?, ?)';
     
-    db.query(query, [Ltpye, Visit, fdate, tform, tdate, tto, reason], (err, result) => {
+    db.query(query, [Ltype, Visit, fdate, tform, tdate, tto, reason], (err, result) => {
         if (err) throw err;
         res.send('Leave application submitted successfully');
     });

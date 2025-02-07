@@ -5,8 +5,7 @@ body{
 }
 
 .container1{
-    background: rgb(2,0,36);
-    background: linear-gradient(175deg, rgba(2,0,36,1) 0%, rgba(131,133,153,1) 44%, rgba(0,212,255,1) 100%);
+    background: rgba(0,25,83,255);
     border-radius: 5px;
 }
 
@@ -14,41 +13,41 @@ body{
 .header-section{
     margin: 5px;
     padding: 5px;
-    color: aliceblue;
+    color: yellow;
 }
 
 a{
     text-decoration: none;
 }
 .request{
-    color: rgb(0, 0, 0);
+    color: rgba(0,25,83,255);
     border-radius: 5px;
     border-style: none;
     padding:5px;
     font-family:sans-serif;
     margin: 10px;
-    background-color: rgb(255, 255, 255);
+    background-color:yellow;
 }
 
 .status{
-    color: rgb(0, 0, 0);
+    color: rgba(0,25,83,255);
     border-radius: 5px;
     border-style: none;
     padding:5px;
     font-family:sans-serif;
     margin: 10px;
- background-color: rgb(255, 255, 255);
+ background-color: yellow;
     
 }
 
 .history{
-    color: rgb(0, 0, 0);
+    color: rgba(0,25,83,255);
     border-radius: 5px;
     border-style: none;
     padding:5px;
     font-family:sans-serif;
     margin: 10px;
-    background-color: rgb(255, 255, 255);
+    background-color: yellow;
 }
 
 .hod{
@@ -56,4 +55,94 @@ a{
     padding:5px;
     font-family:Monospace;
     font-size:large;
+    color: white;
 }
+
+
+.Leave{
+    color: white;
+}
+.visit{
+    color: white;
+}
+
+.fromdate{
+    color: white;
+}
+
+.timefrom{
+    color: white;
+}
+
+.todate{
+    color: white;
+}
+.timeto{
+    color: white;
+}
+.reason{
+    color: white;
+}
+.mail{
+    color: white;
+}
+.pass{
+    color: white;
+}
+.submit{
+    background-color:yellow ;
+    border-radius: 5px;
+    border-style: none;
+    color: rgba(0,25,83,255);
+}
+
+
+.header{
+    font-family:Monospace;
+    font-size:large;
+    text-align: center;
+}
+
+
+.button{
+    color: rgba(0,25,83,255);
+    border-radius: 5px;
+    border-style: none;
+    padding:5px;
+    font-family:sans-serif;
+    margin: 10px;
+    background-color:yellow;
+}
+
+.stubutton{
+    background-color:yellow ;
+    border-radius: 5px;
+    border-style: none;
+    color: rgba(0,25,83,255);
+    margin: 5px;
+    border-radius: 5px;
+    border-style: none;
+}
+
+.adbutton{
+        background-color:yellow ;
+        border-radius: 5px;
+        border-style: none;
+        color: rgba(0,25,83,255);
+        margin: 5px;
+}
+
+.penbutton{
+        background-color:yellow ;
+        border-radius: 5px;
+        border-style: none;
+        color: rgba(0,25,83,255);
+        margin: 5px;
+}
+.reqbutton{
+    background-color:yellow ;
+        border-radius: 5px;
+        border-style: none;
+        color: rgba(0,25,83,255);
+        margin: 5px;
+    }

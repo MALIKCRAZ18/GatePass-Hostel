@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gatepass-Generator</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
     <div class="container1">
@@ -17,8 +17,8 @@
         <div class="container3" style="display: none;">
             <h1 class="hod">HOD NAME: 123456789</h1>
             <form action="http://localhost:5000/submit-leave" method="POST">
-                <label for="Ltpye">Leave Type</label><br>
-                <select name="Ltpye" id="Ltpye">
+                <label class="Leave" for="Ltype">Leave Type</label><br>
+                <select name="Ltype" id="Ltype">
                     <option value="select">-Select-</option>
                     <option value="sick">Sick</option>
                     <option value="emergency">Emergency</option>
@@ -26,22 +26,22 @@
                     <option value="od">On Duty</option>
                 </select><br>
 
-                <label for="Visit">Visiting Place</label>
+                <label class="visit" for="Visit">Visiting Place</label>
                 <input type="text" name="Visit" id="Visit" required><br>
 
-                <label for="fdate">From Date</label>
+                <label class="fromdate" for="fdate">From Date</label>
                 <input type="date" name="fdate" id="fdate" required><br>
 
-                <label for="tform">Time From</label>
+                <label class="timefrom" for="tform">Time From</label>
                 <input type="time" name="tform" id="tform" required><br>
 
-                <label for="tdate">To Date</label>
+                <label class="todate" for="tdate">To Date</label>
                 <input type="date" name="tdate" id="tdate" required><br>
 
-                <label for="tto">Time To</label>
+                <label class="timeto" for="tto">Time To</label>
                 <input type="time" name="tto" id="tto" required><br>
 
-                <label for="reason">Reason</label>
+                <label class="reason" for="reason">Reason</label>
                 <textarea name="reason" id="reason" required></textarea><br>
 
                 <button class="button" type="submit">Submit Leave Application</button>
@@ -49,8 +49,8 @@
         </div>
         <div class="container4">
             <h1 class="hod">LEAVE DATA</h1>
-            <p>Leave results</p>
-<table id="leaveTable">
+            <p class="hod">Leave results</p>
+            <table id="leaveTable" class="hod header">
     <thead>
         <tr>
             <th>ID</th>
@@ -63,17 +63,19 @@
     <tbody>
         <!-- Data will be inserted here -->
     </tbody>
-</table>
+    </table>
         </div>
     </div>
     <script>
         function myFunction1() {
-           alert("Clicked me")
-           const dstyle = document.querySelector(".container3");
-           dstyle.style.display = "block";
+          
+           document.querySelector('.container3').style.display = 'block';
+           document.querySelector('.container4').style.display = 'none';
         }
         function myFunction2() {
-           alert("Clicked me2");
+        
+           document.querySelector(".container3").style.display = "none";
+            document.querySelector(".container4").style.display = "block";
            async function fetchLeaveData() {
     try {
         console.log("HERE")
