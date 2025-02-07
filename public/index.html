@@ -78,8 +78,8 @@
             document.querySelector(".container4").style.display = "block";
            async function fetchLeaveData() {
     try {
-        console.log("HERE")
-        const response = await fetch('http://localhost:5000/leave-data');
+        loggedinreg = "REG456";
+        const response = await fetch('http://localhost:5000/leave-data/');
         console.log("DONE")
         if (!response.ok) {
             throw new Error('Network response was not ok');

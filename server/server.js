@@ -15,23 +15,41 @@ const db = mysql2.createConnection({
     database: 'hod_leave', 
     port: 3306
 });
-
 db.connect((err) => {
     if (err) throw err;
     console.log('Connected to database');
 });
 
 // Post Route to handle form submission
-app.get('/leave-data', (req, res) => {
+app.get('/leave-data', async (req, res) => {
+    try{
+         await mysql2.connect(db);
+         const result = await mysql2.query`SELECT * FROM leaveData WHERE studentID = ${reg}`;
     
-    const query = 'SELECT * FROM leave_requests where status = "pending"';
-    
-    db.query(query, (err, result) => {
-        if (err) throw err;
-        res.send(result);
-    });
+         if (result.recordset.length > 0) {
+            res.json(result.recordset[0]);
+          } else {
+            res.status(404).json({ message: 'Data not found' });
+          }
+    }
+    catch(err){
+        console.log(err);
+    }
+   
 });
 
+
+// app.get('/leave-data/query', (req, res) => {
+//     const reg = req.query.reg
+//     const data = leaveData.find(item => item.reg === reg);
+//     if (data){
+//         res.json(data);
+//     }
+//     db.query(query, (err, result) => {
+//         if (err) throw err;
+//         res.send(result);
+//     });
+// });
 
 app.post('/submit-leave', (req, res) => {
     console.log(req.body);
