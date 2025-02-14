@@ -21,22 +21,29 @@ db.connect((err) => {
 });
 
 // Post Route to handle form submission
-app.get('/leave-data', async (req, res) => {
-    try{
-         await mysql2.connect(db);
-         const result = await mysql2.query`SELECT * FROM leaveData WHERE studentID = ${reg}`;
-    
-         if (result.recordset.length > 0) {
-            res.json(result.recordset[0]);
-          } else {
-            res.status(404).json({ message: 'Data not found' });
-          }
+app.get('/leave-data', (req, res) => {
+    try {
+        const reg = "REG123";
+        const query = "SELECT * FROM leave_requests WHERE studentID = ?";
+        
+        db.query(query, [reg], (err, result) => {
+            if (err) {
+                console.error("Database Query Error:", err);
+                res.status(500).json({ message: "Internal Server Error" });
+            } else {
+                if (result.length > 0) {
+                    res.json(result[0]);
+                } else {
+                    res.status(404).json({ message: "Data not found" });
+                }
+            }
+        });
+    } catch (err) {
+        console.error("Error:", err);
+        res.status(500).json({ message: "Internal Server Error" });
     }
-    catch(err){
-        console.log(err);
-    }
-   
 });
+
 
 
 // app.get('/leave-data/query', (req, res) => {
@@ -52,15 +59,21 @@ app.get('/leave-data', async (req, res) => {
 // });
 
 app.post('/submit-leave', (req, res) => {
-    console.log(req.body);
+    try{
+        console.log(req.body);
     const { Ltype, Visit, fdate, tform, tdate, tto, reason } = req.body;
-
-    const query = 'INSERT INTO leave_requests (leave_type, visiting_place, from_date, from_time, to_date, to_time, reason) VALUES (?, ?, ?, ?, ?, ?, ?)';
+    const regno = "REG123";
+    const query = 'INSERT INTO leave_requests (leave_type, visiting_place, from_date, from_time, to_date, to_time, reason, studentID) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
     
-    db.query(query, [Ltype, Visit, fdate, tform, tdate, tto, reason], (err, result) => {
+    db.query(query, [Ltype, Visit, fdate, tform, tdate, tto, reason, regno], (err, result) => {
         if (err) throw err;
         res.send('Leave application submitted successfully');
     });
+    }
+    catch(err){
+        console.log(err);
+    }
+    
 });
 
 // Start server

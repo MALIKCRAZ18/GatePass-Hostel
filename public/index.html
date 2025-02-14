@@ -5,9 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gatepass-Generator</title>
     <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <div class="container1">
+    <div class="container container1">
         <h1 class="header-section">Hostel Leave Request Screen</h1>
         <div class="container2">
             <button class="request" id="req" onclick="myFunction1()">Leave Request</button>
@@ -15,9 +22,9 @@
             <button class="history" id="hist" onclick="myFunction3()">Leave History</button>
         </div>
         <div class="container3" style="display: none;">
-            <h1 class="hod">HOD NAME: 123456789</h1>
-            <form action="http://localhost:5000/submit-leave" method="POST">
-                <label class="Leave" for="Ltype">Leave Type</label><br>
+            <form class="form-horizontal" action="http://localhost:5000/submit-leave" method="POST">
+                <div class="form-group">
+                    <label class="Leave control-label col-sm-2" for="Ltype">Leave Type</label>
                 <select name="Ltype" id="Ltype">
                     <option value="select">-Select-</option>
                     <option value="sick">Sick</option>
@@ -25,34 +32,43 @@
                     <option value="medical">Medical advice</option>
                     <option value="od">On Duty</option>
                 </select><br>
-
-                <label class="visit" for="Visit">Visiting Place</label>
+            </div>
+            <div class="form-group">
+                <label class="visit control-label col-sm-2" for="Visit">Visiting Place</label>
                 <input type="text" name="Visit" id="Visit" required><br>
-
-                <label class="fromdate" for="fdate">From Date</label>
+            </div>
+            <div class="form-group">
+                <label class="fromdate control-label col-sm-2" for="fdate">From Date</label>
                 <input type="date" name="fdate" id="fdate" required><br>
-
-                <label class="timefrom" for="tform">Time From</label>
+            </div>
+            <div class="form-group">
+                <label class="timefrom control-label col-sm-2" for="tform">Time From</label>
                 <input type="time" name="tform" id="tform" required><br>
-
-                <label class="todate" for="tdate">To Date</label>
+            </div>
+            <div class="form-group">
+                <label class="todate control-label col-sm-2" for="tdate">To Date</label>
                 <input type="date" name="tdate" id="tdate" required><br>
-
-                <label class="timeto" for="tto">Time To</label>
+            </div>
+            <div class="form-group">
+                <label class="timeto control-label col-sm-2" for="tto">Time To</label>
                 <input type="time" name="tto" id="tto" required><br>
-
-                <label class="reason" for="reason">Reason</label>
+            </div>
+            <div class="form-group">
+                <label class="reason control-label col-sm-2" for="reason">Reason</label>
                 <textarea name="reason" id="reason" required></textarea><br>
+            </div>
+            <div class="col-sm-offset-1 col-sm-10" style="margin-bottom: 50px;">
+                <button type="submit" class="btn btn-warning">Submit Leave Application</button>
+              </div>
 
-                <button class="button" type="submit">Submit Leave Application</button>
             </form>
         </div>
-        <div class="container4">
+        <div class="container4" style="display: none;">
             <h1 class="hod">LEAVE DATA</h1>
             <p class="hod">Leave results</p>
-            <table id="leaveTable" class="hod header">
+            <table id="leaveTable" class="table table-bordered .table-hover table-responsive">
     <thead>
-        <tr>
+        <tr class="hod">
             <th>ID</th>
             <th>Leave Type</th>
             <th>Visiting Place</th>
@@ -86,23 +102,21 @@
         }
 
         const data = await response.json();
+        console.log(data);
         const tableBody = document.querySelector('#leaveTable tbody');
 
-        // Clear existing rows
-        tableBody.innerHTML = '';
+        const row = document.createElement("tr");
+        row.classList.add("hod");
+        row.innerHTML = `
+            <td>${data.id}</td>
+            <td>${data.leave_type}</td>
+            <td>${data.visiting_place}</td>
+            <td>${new Date(data.from_date).toLocaleDateString()}</td>
+            <td>${data.from_time}</td>
+        `;
 
-        // Populate the table with received data
-        data.forEach(item => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${item.id}</td>
-                <td>${item.leave_type}</td>
-                <td>${item.visiting_place}</td>
-                <td>${new Date(item.from_date).toLocaleDateString()}</td>
-                <td>${item.from_time}</td>
-            `;
-            tableBody.appendChild(row);
-        });
+        tableBody.innerHTML = "";
+        tableBody.appendChild(row); 
     } catch (error) {
         console.error('Error fetching leave data:', error);
     }
