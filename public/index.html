@@ -66,7 +66,7 @@
         <div class="container4" style="display: none;">
             <h1 class="hod">LEAVE DATA</h1>
             <p class="hod">Leave results</p>
-            <table id="leaveTable" class="table table-bordered .table-hover table-responsive">
+            <table id="leaveTable" class="table table-bordered table-responsive">
     <thead>
         <tr class="hod">
             <th>ID</th>
@@ -81,21 +81,40 @@
     </tbody>
     </table>
         </div>
+    
+    <div class="container5" style="display: none;">
+        <table id="leaveHistory" class="table table-bordered table-responsive">
+            <thead>
+                <tr class="hod">
+                    <th>ID</th>
+                    <th>Leave Type</th>
+                    <th>Visiting Place</th>
+                    <th>From Date</th>
+                    <th>From Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Data will be inserted here -->
+            </tbody>
+            </table>
     </div>
+</div>
     <script>
         function myFunction1() {
           
            document.querySelector('.container3').style.display = 'block';
            document.querySelector('.container4').style.display = 'none';
+           document.querySelector('.container5').style.display = 'none';
         }
         function myFunction2() {
         
            document.querySelector(".container3").style.display = "none";
             document.querySelector(".container4").style.display = "block";
+            document.querySelector(".container5").style.display = "none";
            async function fetchLeaveData() {
     try {
-        loggedinreg = "REG456";
-        const response = await fetch('http://localhost:5000/leave-data/');
+        loggedinreg = "REG123";
+        const response = await fetch('http://localhost:5000/leave-status/');
         console.log("DONE")
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -111,6 +130,7 @@
             <td>${data.id}</td>
             <td>${data.leave_type}</td>
             <td>${data.visiting_place}</td>
+            <td>${data.reason}</td>
             <td>${new Date(data.from_date).toLocaleDateString()}</td>
             <td>${data.from_time}</td>
         `;
@@ -124,8 +144,57 @@
 fetchLeaveData();
         }
         function myFunction3() {
-           
+            document.querySelector(".container3").style.display = "none";
+            document.querySelector(".container4").style.display = "none";
+            document.querySelector(".container5").style.display = "block";
+            async function fetchLeaveData() {
+                try {; 
+                    const response = await fetch('http://localhost:5000/leave-history/');
+                    if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                let data = await response.json();
+                console.log(data);
+                const tableBody = document.querySelector('#leaveHistory tbody');
+                tableBody.innerHTML = "";
+    
+
+// 📌 Case 1: No data found
+if (!data || Object.keys(data).length === 0) {
+    tableBody.innerHTML = `<tr><td colspan="5">No data available</td></tr>`;
+    return;
+}
+
+// 📌 Case 2: Convert single object to an array
+if (!Array.isArray(data)) {
+    data = [data]; // Wrap in an array
+}
+
+// 📌 Case 3: Loop through each record (Single or Multiple)
+data.forEach(item => {
+    const row = document.createElement("tr");
+    row.classList.add("hod"); // Add class if needed
+
+    row.innerHTML = `
+        <td>${item.id}</td>
+        <td>${item.leave_type}</td>
+        <td>${item.visiting_place}</td>
+        <td>${new Date(item.from_date).toLocaleDateString()}</td>
+        <td>${item.from_time}</td>
+    `;
+
+    tableBody.appendChild(row);
+});
+
+        
+
+            }
+            catch (error) {
+                console.error('Error fetching leave data:', error);
+            }
         }
+        fetchLeaveData();
+    }
       </script>
 </body>
 </html>

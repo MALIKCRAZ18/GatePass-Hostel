@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOD Leave Approvals</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 10px; border: 1px solid #ddd; text-align: left; }
+        th { background-color: #f4f4f4; }
+        button { padding: 8px 12px; margin: 5px; cursor: pointer; }
+        .approve { background-color: green; color: white; border: none; }
+        .reject { background-color: red; color: white; border: none; }
+    </style>
+</head>
+<body>
+
+    <h2>Pending Leave Requests</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Leave Type</th>
+                <th>Visiting Place</th>
+                <th>From Date</th>
+                <th>To Date</th>
+                <th>Reason</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="leaveTableBody"></tbody>
+    </table>
+
+    <script>
+        async function fetchPendingLeaves() {
+            try {
+                const response = await fetch("http://localhost:5000/pending-leaves");
+                const data = await response.json();
+                const tableBody = document.getElementById("leaveTableBody");
+                tableBody.innerHTML = "";
+
+                if (data.length === 0) {
+                    tableBody.innerHTML = `<tr><td colspan="8">No pending leave requests</td></tr>`;
+                    return;
+                }
+
+                data.forEach(item => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${item.id}</td>
+                        <td>${item.leave_type}</td>
+                        <td>${item.visiting_place}</td>
+                        <td>${new Date(item.from_date).toLocaleDateString()}</td>
+                        <td>${new Date(item.to_date).toLocaleDateString()}</td>
+                        <td>${item.reason}</td>
+                        <td>${item.status}</td>
+                        <td>
+                            <button class="approve" onclick="updateStatus(${item.id}, 'approved')">Approve</button>
+                            <button class="reject" onclick="updateStatus(${item.id}, 'rejected')">Reject</button>
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+
+            } catch (error) {
+                console.error("Error fetching leave requests:", error);
+            }
+        }
+
+        async function updateStatus(id, status) {
+            try {
+                const response = await fetch("http://localhost:5000/update-leave-status", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ id, status })
+                });
+
+                const result = await response.json();
+                alert(result.message);
+                fetchPendingLeaves(); // Refresh table after update
+            } catch (error) {
+                console.error("Error updating leave status:", error);
+            }
+        }
+
+        // Fetch pending leave requests on page load
+        fetchPendingLeaves();
+    </script>
+
+</body>
+</html>
