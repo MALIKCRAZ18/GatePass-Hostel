@@ -1,24 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import LeaveRequest from './LeaveRequest';
+import LeaveApproval from './LeaveApproval';
+import Auth from './Auth';
+import Header from './Header';
+import NoPage from './NoPage';
+import './index.css';
+import './global.css';
+
 
 function App() {
+  let token = localStorage.getItem('token');
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+      {token && <Header />}
+        <Routes>
+          <Route path="/leave-request" element={<LeaveRequest />} />
+          <Route path="/leave-approval" element={<LeaveApproval />} />
+          <Route path="/" element={<Auth/>} />
+          <Route path="*" element={<NoPage />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
