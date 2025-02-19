@@ -1,12 +1,24 @@
 body{
-    margin: 5px;
-    padding: 10px;;
+    /* margin: 5px; */
+    padding: 50px;
     font-family: sans-serif;
 }
 
 .container1{
     background: rgba(0,25,83,255);
-    border-radius: 5px;
+    padding: 30px;
+}
+
+
+.container3 {
+    padding: 50px;
+}
+
+
+.yellow {
+    background: yellow;
+    color: yellow;
+    background-color: yellow;
 }
 
 
@@ -51,10 +63,6 @@ a{
 }
 
 .hod{
-    margin: 5px;
-    padding:5px;
-    font-family:Monospace;
-    font-size:large;
     color: white;
 }
 
