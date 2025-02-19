@@ -70,7 +70,10 @@
         }
 
         async function updateStatus(id, status) {
+
             try {
+                console.log(status);
+                console.log(JSON.stringify({ id, status }));
                 const response = await fetch("http://localhost:5000/update-leave-status", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },

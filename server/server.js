@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const mysql2 = require('mysql2');
 const cors = require('cors');
 const app = express();
+app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors({
     origin: 'http://localhost:3000'
@@ -118,7 +119,10 @@ app.get("/pending-leaves", (req, res) => {
 });
 
 app.post("/update-leave-status", (req, res) => {
-    const { id, status } = req.body; // ID of leave request & new status
+    const { id, status } = req.body;
+    console.log(req.body) // ID of leave request & new status
+    console.log(id);
+    console.log(status);
     if (!["approved", "rejected"].includes(status)) {
         return res.status(400).json({ message: "Invalid status" });
     }

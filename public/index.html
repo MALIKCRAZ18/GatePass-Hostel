@@ -72,6 +72,7 @@
             <th>ID</th>
             <th>Leave Type</th>
             <th>Visiting Place</th>
+            <th>Reason</th>
             <th>From Date</th>
             <th>From Time</th>
         </tr>
@@ -89,8 +90,10 @@
                     <th>ID</th>
                     <th>Leave Type</th>
                     <th>Visiting Place</th>
+                    <th>Reason</th>
                     <th>From Date</th>
                     <th>From Time</th>
+                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>
@@ -179,8 +182,10 @@ data.forEach(item => {
         <td>${item.id}</td>
         <td>${item.leave_type}</td>
         <td>${item.visiting_place}</td>
+        <td>${item.reason}</td>
         <td>${new Date(item.from_date).toLocaleDateString()}</td>
         <td>${item.from_time}</td>
+        <td>${item.status}</td>
     `;
 
     tableBody.appendChild(row);
