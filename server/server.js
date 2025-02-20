@@ -161,8 +161,7 @@ app.post('/submit-leave', verifyToken, (req, res) => {
     
     db.query(query, [Ltype, Visit, fdate, tform, tdate, tto, reason, regno], (err, result) => {
         if (err) throw err;
-        res.send('Leave application submitted successfully');
-    });
+        res.status(200).json({message:'Leave application submitted successfully'});    });
     }
     catch(err){
         console.log(err);

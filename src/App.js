@@ -10,7 +10,9 @@ import './global.css';
 
 
 function App() {
-  let token = localStorage.getItem('token');
+
+  const { token } = useContext(AuthContext);
+
 
   return (
     <Router>
@@ -27,4 +29,10 @@ function App() {
   );
 }
 
-export default App;
+export default function AppWrapper() {
+  return (
+    <AuthProvider>
+      <App />
+    </AuthProvider>
+  );
+}

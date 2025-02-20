@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './global.css';
 import { useNavigate } from 'react-router-dom';
+import { sign } from 'jsonwebtoken';
+import { AuthContext } from './AuthContext';
 
 
 const Auth = () => {
   const navigate = useNavigate();
+  const { signIn } = useContext(AuthContext);
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
     registration_number: '',
@@ -47,6 +50,7 @@ const Auth = () => {
       
 
       alert(data.message);
+      signIn(data.token);
       if (formData.email === 'hod@mycollege.com') {
         navigate('/leave-approval');
       }

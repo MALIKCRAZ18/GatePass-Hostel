@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './global.css';
+import { AuthContext } from './AuthContext';
 
 const Header = () => {
+  const { signOut } = useContext(AuthContext);
+
   const navigate = useNavigate();
   const [userName, setUserName] = useState('User');
   const token = localStorage.getItem('token');
@@ -10,6 +13,7 @@ const Header = () => {
 
   const handleSignOut = () => {
     localStorage.removeItem('token');
+    signOut();
     navigate('/');
   };
   const getUser = async() => {
