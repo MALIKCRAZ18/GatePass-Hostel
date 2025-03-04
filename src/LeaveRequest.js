@@ -145,37 +145,12 @@ const LeaveRequest = () => {
         </div>
       )}
       {view === 'status' && (
-        <div>
-          <h2>Leave Data</h2>
-          <div className='table-container'>
-          <table className="table table-bordered table-responsive">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Leave Type</th>
-                <th>Visiting Place</th>
-                <th>Reason</th>
-                <th>From Date</th>
-                <th>From Time</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {leaveData.map((data, index) => (
-                <tr key={index}>
-                  <td>{data.id}</td>
-                  <td>{data.leave_type}</td>
-                  <td>{data.visiting_place}</td>
-                  <td>{data.reason}</td>
-                  <td>{new Date(data.from_date).toLocaleDateString()}</td>
-                  <td>{data.from_time}</td>
-                  <td>{data.status}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          </div>
-        </div>
+    leaveData?.length !== 0 ? <div className='d-grid gap-2 col-sm-10 mt-4'>
+    <div className='col-sm-12 text-center'>
+      <QrCodeGenerator leaveData={leaveData}/>
+    </div>
+      </div>
+        : <div className='mt-4'> Apply for leave</div>
       )}
       {view === 'history' && (
         <div>

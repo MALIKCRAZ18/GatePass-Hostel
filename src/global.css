@@ -148,3 +148,24 @@ button:hover {
 .sign-out:hover {
     background-color: #cc0000;
 }
+
+.qr-container {
+    display: inline-block;
+    border: 5px solid yellow;
+    padding: 10px;
+    background-color: #000033;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.button-group button {
+    flex: 1;
+    max-width: 180px;
+}
